@@ -44,4 +44,4 @@ app.*.map.json
 
 # Vercel configuration (do not ignore)
 /vercel.json
-/vercel_build.sh
+.vercel
