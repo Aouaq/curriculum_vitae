@@ -36,15 +36,16 @@ class _TypewriterCycleState extends State<TypewriterCycle> {
 
   void _startTyping() {
     _timer = Timer.periodic(widget.typingSpeed, (timer) {
+      if (!mounted) return; // prevent calling after dispose
       setState(() {
         if (!_isDeleting) {
           if (_charIndex < widget.texts[_textIndex].length) {
             _charIndex++;
             _currentText = widget.texts[_textIndex].substring(0, _charIndex);
           } else {
-            // pause before deleting
             _timer?.cancel();
             Future.delayed(widget.pause, () {
+              if (!mounted) return; // avoid setState after dispose
               _isDeleting = true;
               _startBackspacing();
             });
@@ -56,13 +57,13 @@ class _TypewriterCycleState extends State<TypewriterCycle> {
 
   void _startBackspacing() {
     _timer = Timer.periodic(widget.backspacingSpeed, (timer) {
+      if (!mounted) return; // prevent calling after dispose
       setState(() {
         if (_isDeleting) {
           if (_charIndex > 0) {
             _charIndex--;
             _currentText = widget.texts[_textIndex].substring(0, _charIndex);
           } else {
-            // move to next word
             _timer?.cancel();
             _isDeleting = false;
             _textIndex = (_textIndex + 1) % widget.texts.length;
@@ -81,9 +82,6 @@ class _TypewriterCycleState extends State<TypewriterCycle> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      _currentText,
-      style: widget.textStyle,
-    );
+    return Text(_currentText, style: widget.textStyle);
   }
 }

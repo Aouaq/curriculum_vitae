@@ -1,8 +1,7 @@
 import 'package:curriculum_vitae/screens/HomeScreen.dart';
 import 'package:curriculum_vitae/screens/MatrixRain.dart';
-import 'package:curriculum_vitae/screens/TypewriterCycle.dart';
+import 'package:curriculum_vitae/screens/typewriter_cycle.dart';
 import 'package:flutter/material.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -34,10 +33,10 @@ class _SplashScreenState extends State<SplashScreen>
     _scaleController.forward();
 
     // Navigate to HomeScreen after 5 seconds
-    Future.delayed(const Duration(seconds: 20), () {
+    Future.delayed(const Duration(seconds: 10), () {
       Navigator.of(
         context,
-      ).pushReplacement(MaterialPageRoute(builder: (_) => const HomePage()));
+      ).pushReplacement(MaterialPageRoute(builder: (_) =>  HomePage()));
     });
   }
 
@@ -47,31 +46,31 @@ class _SplashScreenState extends State<SplashScreen>
     super.dispose();
   }
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    backgroundColor: const Color(0xFF151515),
-    body: Stack(
-      fit: StackFit.expand,
-      children: [
-        const MatrixRain(columnCount: 25, color: Color(0xFFE2FF8A)), // 👈 Matrix effect
-       Center(
-  child: ScaleTransition(
-    scale: _scale,
-    child: TypewriterCycle(
-      texts: ["welcome", "bonjour", "hola", "hallo"],
-      textStyle: const TextStyle(
-        fontSize: 32.0,
-        letterSpacing: 2,
-        fontWeight: FontWeight.bold,
-        color: Color(0xFFE2FF8A),
-        fontFamily: 'Michroma',
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFF151515),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          const MatrixRain(
+            columnCount: 25,
+            color: Color(0xFFE2FF8A),
+          ), // 👈 Matrix effect
+          Center(
+            child: TypewriterCycle(
+              texts: ["welcome", "bonjour", "hola", "hallo"],
+              textStyle: const TextStyle(
+                fontSize: 32.0,
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFFE2FF8A),
+                fontFamily: 'Michroma',
+              ),
+            ),
+          ),
+        ],
       ),
-    ),
-  ),
-)
-],
-    ),
-  );
-}
+    );
+  }
 }
